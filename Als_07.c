@@ -28,7 +28,16 @@ typedef struct rute {
 	int premium;
 }rute;
 
-
+typedef struct jadwal {
+	char kode[100];
+	char tanggal[100];
+	char waktuKbrt[100];
+	char kbrt[100];
+	char tjn[100];
+	char kai[100];
+	int sisa;
+	int pemasukan;
+}jadwal;
 
 int delay(int number_of_seconds)
 {
