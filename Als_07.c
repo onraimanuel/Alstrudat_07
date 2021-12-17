@@ -484,255 +484,221 @@ int kelolaProfile() {
     }
 }
 
+tambahJadwal() {
+	jadwal *j;
+	jadwal j1;
+	rute r1;
+    FILE *fp,*fp1;
+    int n,i;
 
-//void update(){
-//    int i, j, found=0;
-//    pengguna s1;
-//    FILE *fp, *fp1;
-//    int rno;
-//    printf("Enter RollNo to Update : ");
-//    scanf("%d",&rno);
-//
-//    fp = fopen("mystudents1.txt","r");
-//    fp1 = fopen("temp.txt","w");
-//    while(fread(&s1,sizeof(pengguna),1,fp)){
-//        if(s1.rno == rno){
-//            found = 1;
-//            s1.total=0;
-//            s1.per=0;
-//            fflush(stdin);
-//            printf("Enter New Name : ");
-//            scanf("%[^\n]s",s1.name);
-//            for(j=0;j<3;j++){
-//                printf("Enter New Marks of Sub%d : ",j+1);
-//                scanf("%d",&s1.sub[j].mark);
-//                s1.total += s1.sub[j].mark;
-//            }
-//            s1.per = s1.total / 3.0;
-//        }
-//        fwrite(&s1,sizeof(pengguna),1,fp1);
-//    }
-//    fclose(fp);
-//    fclose(fp1);
-//
-//
-//    if(found){
-//            fp = fopen("mystudents1.txt","w");
-//            fp1 = fopen("temp.txt","r");
-//
-//            while(fread(&s1,sizeof(pengguna),1,fp1)){
-//                fwrite(&s1,sizeof(pengguna),1,fp);
-//            }
-//            fclose(fp);
-//            fclose(fp1);
-//    }
-//    else
-//        printf("\nNot Found.....\n");
-//}
-
-
-
-//
-//void append(){
-//        pengguna *s, s1;
-//        FILE *fp;
-//        int n,i,j;
-//
-//        printf("Enter how many students : ");
-//        scanf("%d",&n);
-//        s = (pengguna*)malloc(1*sizeof(pengguna));
-//        fp = fopen("mystudents1.txt","a");
-//
-//        for(i=0;i<n;i++){
-//            s[i].total=0;
-//            s[i].per=0;
-//            printf("Enter RollNo : ");
-//            scanf("%d",&s[i].rno);
-//            fflush(stdin);
-//            printf("Enter Name : ");
-//            scanf("%[^\n]s",s[i].name);
-//            for(j=0;j<3;j++){
-//                printf("Enter Marks of Sub%d : ",j+1);
-//                scanf("%d",&s[i].sub[j].mark);
-//                s[i].total += s[i].sub[j].mark;
-//            }
-//            s[i].per = s[i].total / 3.0;
-//
-//            fwrite(s+i,sizeof(pengguna),1,fp);
-//        }
-//    fclose(fp);
-//}
+    j = (jadwal*)malloc(100*sizeof(jadwal));
+    fp = fopen("jadwal.txt","a+");
+    fp1 = fopen("rute.txt","r");
+    
+	printf("#TAMBAH DATA JADWAL#\n\n");
+	
+    for(i=0;i<1;i++){
+    	printf("Tambah Data Jadwal : ");
+    	printf("\n\nKode Jadwal : ");
+    	fflush(stdin);
+        scanf("%s",j[i].kode);
+        printf("\nTanggal : ");
+    	fflush(stdin);
+        scanf("%s",j[i].tanggal);
+        printf("\nWaktu Keberangkatan : ");
+    	fflush(stdin);
+        scanf("%s",j[i].waktuKbrt);
+        printf("\nKeberangkatan : ");
+    	fflush(stdin);
+        scanf("%s",j[i].kbrt);
+        printf("\nTujuan : ");
+    	fflush(stdin);
+        scanf("%s",j[i].tjn);
+        printf("\nKAI : ");
+    	fflush(stdin);
+        scanf("%s",j[i].kai);
+        printf("\nJumlah sisa kursi : ");
+    	fflush(stdin);
+        scanf("%d",&j[i].sisa);
+        
+        
+        
+        while(fread(&r1,sizeof(rute),1,fp1)) {
+            if(strcmp(j[i].kbrt,r1.kbrt)!=0) {
+            	printf("\n\nKeberangkatan %s tidak ada pada daftar !",j[i].kbrt);
+			} 
+			
+			if (strcmp(j[i].tjn,r1.tjn)!=0) {
+				printf("\n\nTujuan %s tidak ada pada daftar !",j[i].tjn);
+			}
+		
+        }
+        
+        fwrite(j+i,sizeof(jadwal),1,fp);
+    }
+    
+    printf("\n-----------------------------------------");
+    printf("\nData Berhasil Ditambahkan\n");
+    printf("------------------------------------------");
+    
+    fclose(fp);
+    
+    kelolaJadwal();
+}
 
 
-//void delete_rec(){
-//    int i, j, found=0;
-//    pengguna s1;
-//    FILE *fp, *fp1;
-//    int rno;
-//    printf("Enter RollNo to Delete : ");
-//    scanf("%d",&rno);
-//
-//    fp = fopen("mystudents1.txt","r");
-//    fp1 = fopen("temp.txt","w");
-//    while(fread(&s1,sizeof(pengguna),1,fp)){
-//        if(s1.rno == rno){
-//            found = 1;
-//        }
-//        else
-//            fwrite(&s1,sizeof(pengguna),1,fp1);
-//    }
-//    fclose(fp);
-//    fclose(fp1);
-//
-//
-//    if(found){
-//            fp = fopen("mystudents1.txt","w");
-//            fp1 = fopen("temp.txt","r");
-//
-//            while(fread(&s1,sizeof(pengguna),1,fp1)){
-//                fwrite(&s1,sizeof(pengguna),1,fp);
-//            }
-//            fclose(fp);
-//            fclose(fp1);
-//    }
-//    else
-//        printf("\nNot Found.....\n");
-//}
+int lihatJadwal() {
+	jadwal *j;
+	jadwal j1;
+    FILE *fp;
+    int n,i;
+    
+
+	
+	printf("\n\n-------------------------------------------------------------------");
+    
+    fp = fopen("jadwal.txt","r");
+	system("cls");
+	printf("#LIHAT DATA JADWAL#");
+	printf("\nData Lengkap Jadwal Kereta Api");
+	printf("\n-------------------------------------------------------------------\n");
+	printf("Kode Jadwal\tTanggal\tWaktu Keberangkatan\t\tKeberangkatan\tTujuan\t\tKAI\t\tStatus\n");
+	while(fread(&j1,sizeof(jadwal),1,fp)) { 
+		printf("%s\t\t%s\t\t%s\t\t%s\t\t%s\t\tKAI %s\t\tSisa %d Kursi\n",j1.kode,j1.tanggal, j1.waktuKbrt, j1.kbrt, j1.tjn, j1.kai, j1.sisa);
+    }
+	
+	printf("\n\n-------------------------------------------------------------------");
+    fclose(fp);
+}
+
+int editJadwal() {
+	jadwal *j;
+	int i=0;
+	int found=0, counter=1;
+    jadwal j1;
+    rute r1;
+    FILE *fp, *fp1, *fp2;
+    
+    char kode[100], kode1[100], kode2[100], kode3[100];
+    
+	system("cls");
+    lihatJadwal();
 
 
-//void count(){
-//        pengguna s1;
-//        FILE *fp;
-//        fp = fopen("mystudents1.txt","r");
-//        fseek(fp,0,SEEK_END);
-//        int n = ftell(fp)/sizeof(pengguna);
-//        printf("\nNo of Records = %d\n",n);
-//        fclose(fp);
-//}
+    fflush(stdin);
+    
+	fp = fopen("rute.txt","r");
+    fp1 = fopen("jadwal.txt","r");
+    fp2 = fopen("temp.txt","w");
+    
+    
+    printf("\n\nEdit Jadwal : \nEDIT_");
+    scanf("%[^\n]s",kode);
+    
+	while(fread(&j1,sizeof(jadwal),1,fp1)){
+    	if(strcmp(j1.kode,kode)==0){
+				found = 1;
+		    	printf("\n\nKode Jadwal : ");
+	    	fflush(stdin);
+	        scanf("%s",j1.kode);
+	        printf("\nTanggal : ");
+	    	fflush(stdin);
+	        scanf("%s",j1.tanggal);
+	        printf("\nWaktu Keberangkatan : ");
+	    	fflush(stdin);
+	        scanf("%s",j1.waktuKbrt);
+	        printf("\nKeberangkatan : ");
+	    	fflush(stdin);
+	        scanf("%s",j1.kbrt);
+	        printf("\nTujuan : ");
+	    	fflush(stdin);
+	        scanf("%s",j1.tjn);
+	        printf("\nKAI : ");
+	    	fflush(stdin);
+	        scanf("%s",j1.kai);
+	        printf("\nJumlah sisa kursi : ");
+	    	fflush(stdin);
+	        scanf("%d",&j1.sisa);   	
 
-//void display(){
-//        pengguna s1;
-//        FILE *fp;
-//        int j;
-//        fp = fopen("mystudents1.txt","r");
-//        while(fread(&s1,sizeof(pengguna),1,fp))
-//        {
-//            printf("\n%-5d%-20s",s1.rno,s1.name);
-//            for(j=0;j<3;j++){
-//                printf("%4d",s1.sub[j].mark);
-//            }
-//            printf("%5d%7.2f",s1.total,s1.per);
-//        }
-//        fclose(fp);
-//}
-
-//void sort_on_screen(){
-//        pengguna *s, s1;
-//        FILE *fp;
-//        fp = fopen("mystudents1.txt","r");
-//        fseek(fp,0,SEEK_END);
-//        int n = ftell(fp)/sizeof(pengguna);
-//        int i,j;
-//        rewind(fp);
-//        s = (pengguna*)calloc(n,sizeof(pengguna));
-//        for(i=0;i<n;i++)
-//            fread(&s[i],sizeof(pengguna),1,fp);
-//
-//        for(i=0;i<n;i++){
-//            for(j=i+1;j<n;j++){
-//                if(s[i].total<s[j].total){
-//                    s1 = s[i];
-//                    s[i] = s[j];
-//                    s[j] = s1;
-//                }
-//            }
-//        }
-//
-//
-//        for(i=0;i<n;i++){
-//            printf("\n%-5d%-20s",s[i].rno,s[i].name);
-//            for(j=0;j<3;j++){
-//                printf("%4d",s[i].sub[j].mark);
-//            }
-//            printf("%5d%7.2f",s[i].total,s[i].per);
-//        }
-//        fclose(fp);
-//}
-
-//void sort_in_file(){
-//
-//        pengguna *s, s1;
-//        FILE *fp;
-//        fp = fopen("mystudents1.txt","r");
-//        fseek(fp,0,SEEK_END);
-//        int n = ftell(fp)/sizeof(pengguna);
-//        int i,j;
-//        rewind(fp);
-//        s = (pengguna*)calloc(n,sizeof(pengguna));
-//        for(i=0;i<n;i++)
-//            fread(&s[i],sizeof(pengguna),1,fp);
-//
-//        fclose(fp);
-//        for(i=0;i<n;i++){
-//            for(j=i+1;j<n;j++){
-//                if(s[i].total<s[j].total){
-//                    s1 = s[i];
-//                    s[i] = s[j];
-//                    s[j] = s1;
-//                }
-//            }
-//        }
-//        for(i=0;i<n;i++){
-//            printf("\n%-5d%-20s",s[i].rno,s[i].name);
-//            for(j=0;j<3;j++){
-//                printf("%4d",s[i].sub[j].mark);
-//            }
-//            printf("%5d%7.2f",s[i].total,s[i].per);
-//        }
-//
-//        fp = fopen("mystudents1.txt","w");
-//
-//        for(i=0;i<n;i++){
-//            fwrite(&s[i],sizeof(pengguna),1,fp);
-//        }
-//
-//        fclose(fp);
-//}
-
-//void sort_by_name(){
-//        pengguna *s, s1;
-//        FILE *fp;
-//        fp = fopen("mystudents1.txt","r");
-//        fseek(fp,0,SEEK_END);
-//        int n = ftell(fp)/sizeof(pengguna);
-//        int i,j;
-//        rewind(fp);
-//        s = (pengguna*)calloc(1,sizeof(pengguna));
-//        for(i=0;i<n;i++)
-//            fread(&s[i],sizeof(pengguna),1,fp);
-//
-//        for(i=0;i<n;i++){
-//            for(j=i+1;j<n;j++){
-//                if(strcmp(s[i].name,s[j].name)>0){
-//                    s1 = s[i];
-//                    s[i] = s[j];
-//                    s[j] = s1;
-//                }
-//            }
-//        }
-//        for(i=0;i<n;i++){
-//            printf("\n%-5d%-20s",s[i].rno,s[i].name);
-//            for(j=0;j<3;j++){
-//                printf("%4d",s[i].sub[j].mark);
-//            }
-//            printf("%5d%7.2f",s[i].total,s[i].per);
-//        }
-//        fclose(fp);
-//}
+			while(fread(&r1,sizeof(rute),1,fp1)) {
+	            if(strcmp(j1.kbrt,r1.kbrt)!=0) {
+	            	printf("\n\nKeberangkatan %s tidak ada pada daftar !",j1.kbrt);
+				} 
+				
+				if (strcmp(j1.tjn,r1.tjn)!=0) {
+					printf("\n\nTujuan %s tidak ada pada daftar !",j1.tjn);
+				}
+			
+	        }
+	        
+	        
+	    	
+        } 
+        
+    	fwrite(&j1,sizeof(jadwal),1,fp2);
+    }
+    fclose(fp);
+    fclose(fp1);
+    fclose(fp2);
+    
+    if (found==1) {
+	    
+    	fp = fopen("jadwal.txt","w");
+    	fp1 = fopen("temp.txt","r");
+    	
+		while(fread(&j1,sizeof(jadwal),1,fp1)) {
+            fwrite(&j1,sizeof(jadwal),1,fp);
+        }
+        
+	    fclose(fp);
+	    fclose(fp1);
+	    
+	} else {
+		printf("\n\nnot found");
+	}
+}
 
 
+int hapusJadwal() {
+	int i, found=0;
+    jadwal j1;
+    FILE *fp, *fp1;
+    char kode[100];
+    fp = fopen("jadwal.txt","r");
+    
+	system("cls");
+	lihatJadwal();
+    
+    printf("\nDelete Jadwal : DELETE_");
+    fflush(stdin);
+    scanf("%[^\n]s",kode);
+
+    fp = fopen("jadwal.txt","r");
+    fp1 = fopen("temp.txt","w");
+    while(fread(&j1,sizeof(jadwal),1,fp)){
+        if(strcmp(j1.kode,kode)==0){
+            found = 1;
+        }
+        else
+            fwrite(&j1,sizeof(jadwal),1,fp1);
+    }
+    fclose(fp);
+    fclose(fp1);
 
 
+    if(found){
+        fp = fopen("jadwal.txt","w");
+        fp1 = fopen("temp.txt","r");
+
+        while(fread(&j1,sizeof(jadwal),1,fp1)){
+            fwrite(&j1,sizeof(jadwal),1,fp);
+        }
+        fclose(fp);
+        fclose(fp1);
+    }
+    else
+        printf("\nNot Found.....\n");
+}
 
 
 
