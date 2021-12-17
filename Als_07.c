@@ -41,13 +41,8 @@ typedef struct jadwal {
 
 int delay(int number_of_seconds)
 {
-    // Converting time into milli_seconds
     int milli_seconds = 1000 * number_of_seconds;
-  
-    // Storing start time
     clock_t start_time = clock();
-  
-    // looping till required time is not achieved
     while (clock() < start_time + milli_seconds);
 }
 
@@ -143,7 +138,7 @@ int tambahKota() {
     
 }
 
-int lihatRute() {
+int melihatRute() {
 	rute *r;
 	rute r1;
     FILE *fp;
@@ -198,7 +193,7 @@ int editRute() {
     char kode[100], kode1[100], kode2[100], kode3[100];
     
 	system("cls");
-    lihatRute();
+    melihatRute();
 
 
     fflush(stdin);
@@ -332,7 +327,7 @@ int hapusRute() {
     char kode[100];
     fp = fopen("rute.txt","r");
 	system("cls");
-	lihatRute();
+	melihatRute();
     
     printf("\nDelete Rute : DELETE_");
     fflush(stdin);
@@ -446,7 +441,7 @@ int kelolaRute() {
 			break;
 		case 2:
 			system("cls");
-			lihatRute();
+			melihatRute();
 			kelolaRute();
 			break;
 		case 3:
@@ -646,12 +641,8 @@ int tambahRute() {
     printf("------------------------------------------");
     
     fclose(fp);
-    
     kelolaRute();
 }
-
-
-
 
 int kelolaPengguna() {
     int i, j, found=0;
@@ -1057,14 +1048,6 @@ int main(){
     	printf("SELAMAT DATANG");
         printf("\n1.Login");
         printf("\n2.Register");
-//        printf("\n3.DISPLAY");
-//        printf("\n4.NO OF RECORDS");
-//        printf("\n5.SEARCH");
-//        printf("\n6.UPDATE");
-//        printf("\n7.DELETE");
-//        printf("\n8.SORT IN FILE BY TOTAL DESC");
-//        printf("\n9.SORT ON SCREEN BY TOTAL DESC");
-//        printf("\n10.SORT ON SCREEN BY NAME");
         printf("\n0.EXIT");
         printf("\nEnter Your Choice : ");
         scanf("%d",&ch);
@@ -1073,34 +1056,8 @@ int main(){
                 login();
             break;
         case 2:
-                daftar();
+               daftar();
             break;
-//        case 3:
-//                display();
-//            break;
-//        case 4:
-//                count();
-//        break;
-//        case 5:
-//                search();
-//        break;
-//        case 6:
-//                update();
-//            break;
-//            case 7:
-//                delete_rec();
-//            break;
-//            case 8:
-//                sort_in_file();
-//                break;
-//            case 9:
-//                sort_on_screen();
-//            break;
-//            case 10:
-//                sort_by_name();
-//            break;
-
-            
         }
     }while(ch!=0);
 
