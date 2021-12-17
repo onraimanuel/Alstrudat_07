@@ -892,7 +892,6 @@ tambahJadwal() {
     
     fclose(fp);
     
-    kelolaJadwal();
 }
 
 
