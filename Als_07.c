@@ -113,6 +113,70 @@ int daftar(){
 }
 
 // Bagian Irma
+int tambahKota() {
+	kota *k;
+    FILE *fp;
+    int n,i,j;
+
+    k = (kota*)malloc(100*sizeof(kota));
+    fp = fopen("kota.txt","a+");
+    
+	printf("#TAMBAH DATA KOTA#\n\n");
+    for(i=0;i<1;i++){
+    	printf("Tambah Kota : ");
+    	fflush(stdin);
+        scanf("%s %s",k[i].kode,k[i].nama);
+        
+        fwrite(k+i,sizeof(kota),1,fp);
+    }
+    
+    fclose(fp);
+    
+}
+
+int lihatRute() {
+	rute *r;
+	rute r1;
+    FILE *fp;
+    int n,i,j, counter=1;
+
+	printf("\n\n-------------------------------------------------------------------");
+    
+    fp = fopen("rute.txt","r");
+	system("cls");
+	printf("#LIHAT DATA RUTE#");
+	printf("\nData Lengkap Rute Kereta Api");
+	printf("\n-------------------------------------------------------------------\n");
+	printf("No\t\tKeberangkatan\tTujuan\t\tKode_Rute\t\tBisnis\t\tPremium\n");
+	while(fread(&r1,sizeof(rute),1,fp)) { 
+		printf("%d\t\t%s\t\t%s\t\t%s\t%d\t%d\n",counter,r1.kbrt,r1.tjn,r1.kode,r1.bisnis,r1.premium);
+		counter++;
+    }
+	
+	printf("\n\n-------------------------------------------------------------------");
+    fclose(fp);
+}
+
+int lihatKota() {
+	kota *k;
+	kota k1;
+    FILE *fp;
+    int n,i,j, counter=1;
+    
+    fp = fopen("kota.txt","r");
+	system("cls");
+	printf("#LIHAT DATA KOTA#");
+	printf("\nData Lengkap Kota");
+	printf("\n-------------------------------------------------------------------\n");
+	printf("No\t\tKode Kota\t\tNama Kota\n");
+	while(fread(&k1,sizeof(kota),1,fp)) { 
+		printf("%d\t\t%s\t\t\t%s\n",counter,k1.kode,k1.nama);
+		counter++;
+    }
+	
+	printf("\n\n-------------------------------------------------------------------");
+    fclose(fp);
+}
 
 // Bagian Jerico
 
